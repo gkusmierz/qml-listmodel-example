@@ -19,9 +19,9 @@ class DeviceListModel(QAbstractListModel):
     def __init__(self):
         super().__init__()
         self._data = []
-        self.add_device("name1", "serial1", False)
-        self.add_device("name2", "serial2", True)
-        self.add_device("name3", "serial3", False)
+        self._add_device("name1", 123, False)
+        self._add_device("name2", 456, True)
+        self._add_device("name3", 789, False)
 
     def roleNames(self):
         return _role_names
@@ -43,7 +43,7 @@ class DeviceListModel(QAbstractListModel):
 
         return None
 
-    def add_device(self, name, serial, connected):
+    def _add_device(self, name, serial, connected):
         new_row = {
             DeviceItemRoles.NAME: name,
             DeviceItemRoles.SERIAL: serial,

@@ -1,4 +1,5 @@
 from PySide6.QtCore import QObject, Property, Slot
+from random import randint
 
 from .device_listmodel import DeviceListModel
 
@@ -18,7 +19,7 @@ class Controller(QObject):
 
     @Slot(int)
     def add_after_index(self, list_index):
-        self._listmodel.add_device_after_index(list_index, "new name", "new serial", False)
+        self._listmodel.add_device_after_index(list_index, "new name", randint(100, 999), False)
 
     @Slot(bool)
     def connect_all_devices(self, connected):

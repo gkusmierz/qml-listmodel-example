@@ -2,8 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-ApplicationWindow
-{
+ApplicationWindow {
     id: mainWindow
     visible: true
     title: qsTr("Sample app")
@@ -26,7 +25,7 @@ ApplicationWindow
                 height: 24
 
                 Text {
-                    text: index + ": " + name + " (" + serial + ") - %1".arg(connected ? "OK" : "NOT FOUND")
+                    text: "%1: %2 (%3) - %4".arg(index).arg(name).arg(serial).arg(connected ? "OK" : "NOT FOUND")
                     font.pointSize: 16
                 }
 
