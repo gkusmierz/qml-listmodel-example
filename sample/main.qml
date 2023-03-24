@@ -25,7 +25,7 @@ ApplicationWindow {
                 height: 24
 
                 Text {
-                    text: "%1: %2 (%3) - %4".arg(index).arg(name).arg(serial).arg(connected ? "OK" : "NOT FOUND")
+                    text: `${index}: ${name} (${serial}) - ${connected ? "OK" : "NOT FOUND"}`
                     font.pointSize: 16
                 }
 
