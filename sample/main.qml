@@ -8,7 +8,6 @@ ApplicationWindow {
     title: qsTr("Sample app")
     width: 640
     height: 320
-    color: "whitesmoke"
 
     RowLayout {
         anchors.fill: parent

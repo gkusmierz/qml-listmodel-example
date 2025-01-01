@@ -1,9 +1,9 @@
 from enum import IntEnum, auto
-from PySide6.QtCore import Qt, QAbstractListModel, QModelIndex
+from PyQt6.QtCore import Qt, QAbstractListModel, QModelIndex
 
 
 class DeviceItemRoles(IntEnum):
-    NAME = Qt.UserRole
+    NAME = Qt.ItemDataRole.UserRole
     SERIAL = auto()
     CONNECTED = auto()
 
@@ -24,24 +24,17 @@ class DeviceListModel(QAbstractListModel):
         self._add_device("name3", 789, False)
 
     def roleNames(self):
-        return _role_names
+        return {role.value: name for role, name in _role_names.items()}
 
     def rowCount(self, parent=QModelIndex()):
         return len(self._data)
 
     def data(self, index, role):
-        if role not in list(DeviceItemRoles):
+        if not index.isValid() or index.row() >= len(self._data):
             return None
 
-        try:
-            device = self._data[index.row()]
-        except IndexError:
-            return None
-
-        if role in device:
-            return device[role]
-
-        return None
+        device = self._data[index.row()]
+        return device.get(DeviceItemRoles(role), None)
 
     def _add_device(self, name, serial, connected):
         new_row = {
@@ -65,12 +58,12 @@ class DeviceListModel(QAbstractListModel):
 
     def set_device_connected(self, list_index, connected):
         if list_index < 0 or list_index >= len(self._data):
-            return None
+            return
         
         self._data[list_index][DeviceItemRoles.CONNECTED] = connected
-        self.dataChanged.emit(self.index(list_index), self.index(list_index), [])
+        self.dataChanged.emit(self.index(list_index), self.index(list_index), [DeviceItemRoles.CONNECTED.value])
 
     def set_all_connected(self, connected):
-        for d in self._data:
-            d[DeviceItemRoles.CONNECTED] = connected
-        self.dataChanged.emit(self.index(0), self.index(self.rowCount() - 1), [])
+        for device in self._data:
+            device[DeviceItemRoles.CONNECTED] = connected
+        self.dataChanged.emit(self.index(0), self.index(self.rowCount() - 1), [DeviceItemRoles.CONNECTED.value])

@@ -1,8 +1,7 @@
 from pathlib import Path
-from PySide6.QtCore import QUrl
-from PySide6.QtGui import QGuiApplication
-from PySide6.QtQml import QQmlApplicationEngine
-from PySide6.QtQuickControls2 import QQuickStyle
+from PyQt6.QtCore import QUrl
+from PyQt6.QtGui import QGuiApplication
+from PyQt6.QtQml import QQmlApplicationEngine
 import sys
 
 from .controller import Controller
@@ -10,7 +9,6 @@ from .controller import Controller
 
 def main():
     app = QGuiApplication(sys.argv)
-    QQuickStyle.setStyle("Material")
 
     qml_app_engine = QQmlApplicationEngine()
     qml_context = qml_app_engine.rootContext()
